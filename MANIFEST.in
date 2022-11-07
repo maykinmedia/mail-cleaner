@@ -1,0 +1,9 @@
+include *.rst
+include LICENSE
+include mail_cleaner/py.typed
+recursive-include mail_cleaner *.html
+recursive-include mail_cleaner *.txt
+recursive-include mail_cleaner *.po
+global-exclude __pycache__
+global-exclude *.py[co]
+
