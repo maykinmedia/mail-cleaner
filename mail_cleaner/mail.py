@@ -1,10 +1,10 @@
 """
-Utility layer on top of :module:`django.core.mail`.
+Utility layer on top of :mod:`django.core.mail`.
 """
 import logging
 from email.mime.image import MIMEImage
 from io import StringIO
-from typing import List, Tuple
+from typing import TYPE_CHECKING, Iterable, List, Optional, Sequence, Tuple
 from urllib.request import urlopen
 
 from django.core.mail import EmailMultiAlternatives, get_connection
@@ -12,23 +12,26 @@ from django.utils.text import slugify
 
 from lxml import etree
 
+if TYPE_CHECKING:
+    from django.core.mail.message import _AttachmentTuple
+
 __all__ = ["send_mail_plus"]
 
 logger = logging.getLogger(__name__)
 
 
 def send_mail_plus(
-    subject,
-    message,
-    from_email,
-    recipient_list,
-    fail_silently=False,
-    auth_user=None,
-    auth_password=None,
+    subject: str,
+    message: str,
+    from_email: Optional[str],
+    recipient_list: Optional[Sequence[str]],
+    fail_silently: bool = False,
+    auth_user: Optional[str] = None,
+    auth_password: Optional[str] = None,
     connection=None,
-    html_message=None,
-    attachments=None,
-):
+    html_message: Optional[str] = None,
+    attachments: Optional[Iterable["_AttachmentTuple"]] = None,
+) -> int:
     """
     Send outgoing email.
 
@@ -55,13 +58,16 @@ def send_mail_plus(
 
         if mime_images:
             for cid, mime_type, content in mime_images:
-                # note we don't pass mime_type because MIMEImage will make it image/image/png
+                # note we don't pass mime_type because MIMEImage will make it
+                # image/image/png
                 image = MIMEImage(content)
                 image.add_header("Content-ID", f"<{cid}>")
                 mail.attach(image)
 
     if attachments:
-        for filename, content, mime_type in attachments:
+        for attachment in attachments:
+            filename, content, *extra = attachment
+            mime_type = extra[0] if extra else None
             mail.attach(filename, content, mime_type)
 
     return mail.send()

@@ -15,4 +15,20 @@ Install from PyPI with pip:
 Usage
 =====
 
-<document how to use the app here>
+Sending e-mail shortcuts
+------------------------
+
+.. automodule:: mail_cleaner.mail
+    :members:
+
+Producing plain text from rich content
+--------------------------------------
+
+.. automodule:: mail_cleaner.text
+    :members:
+
+Sanitizing content
+------------------
+
+.. automodule:: mail_cleaner.sanitizer
+    :members:
