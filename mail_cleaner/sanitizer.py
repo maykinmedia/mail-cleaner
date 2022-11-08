@@ -5,6 +5,7 @@ from typing import List, Optional
 from urllib.parse import urlsplit
 
 from .constants import URL_REGEX
+from .utils import check_message_size
 
 __all__ = ["sanitize_content"]
 
@@ -20,6 +21,7 @@ def sanitize_content(content: str, allowlist: Optional[List[str]] = None) -> str
 
     * strip URLs that are not present in the explicit allow list
     """
+    check_message_size(content)
 
     # strip out any hyperlinks that are not in the configured allowlist
     allowlist = allowlist or []

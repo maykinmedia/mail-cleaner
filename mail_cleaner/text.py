@@ -8,12 +8,11 @@ import re
 from html import unescape
 from typing import List
 
-from django.core.exceptions import SuspiciousOperation
 from django.utils.html import strip_tags as django_strip_tags
 
 from lxml.html import fromstring, tostring
 
-from .constants import MESSAGE_SIZE_LIMIT
+from .utils import check_message_size
 
 __all__ = ["strip_tags_plus"]
 
@@ -105,8 +104,7 @@ def unwrap_anchors(html_str: str) -> str:
     .. note:: this potentially runs on untrusted HTML content, which is why we apply an
        upper limit to the message size.
     """
-    if len(html_str) > MESSAGE_SIZE_LIMIT:
-        raise SuspiciousOperation("email content-length exceeded safety limit")
+    check_message_size(html_str)
 
     root = fromstring(html_str)
 
