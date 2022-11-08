@@ -37,9 +37,15 @@ NEWLINE_CHARS = (
 
 def strip_tags_plus(text: str, keep_leading_whitespace: bool = False) -> str:
     """
-    NOTE this renders unescaped user-data and should never used for display as HTML content
+    Strip HTML tags from input text.
 
-    copied and modified from https://bitbucket.org/maykinmedia/werkbezoek/src/develop/src/werkbezoek/utils/email.py
+    This utility wraps around django's :func:`django.utils.html.strip_tags` and cleans
+    up the output to make it suitable for plain text display.
+
+    .. warning:: This renders unescaped user-data and should **never** be used for
+       display as HTML content (XSS risk).
+
+    This is originally copied and modified from Maykin Media's "Werkbezoek" project.
     """
     text = unwrap_anchors(text)
     # <br> is eaten completely by strip_tags, so replace them by newlines
