@@ -36,7 +36,7 @@ Install
 Usage
 =====
 
-<document or refer to docs>
+See the usage `documentation <https://mail-cleaner.readthedocs.io/en/latest/>`_.
 
 Local development
 =================
