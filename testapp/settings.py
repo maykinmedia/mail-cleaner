@@ -47,3 +47,5 @@ TEMPLATES = [
 ]
 
 ROOT_URLCONF = "testapp.urls"
+
+USE_TZ = True
