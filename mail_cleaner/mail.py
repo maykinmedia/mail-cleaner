@@ -4,7 +4,7 @@ Utility layer on top of :mod:`django.core.mail`.
 import logging
 from email.mime.image import MIMEImage
 from io import StringIO
-from typing import TYPE_CHECKING, Iterable, List, Optional, Sequence, Tuple
+from typing import TYPE_CHECKING, Dict, Iterable, List, Optional, Sequence, Tuple
 from urllib.request import urlopen
 
 from django.core.mail import EmailMultiAlternatives, get_connection
@@ -31,6 +31,7 @@ def send_mail_plus(
     connection=None,
     html_message: Optional[str] = None,
     attachments: Optional[Iterable["_AttachmentTuple"]] = None,
+    headers: Optional[Dict[str, str]] = None,
 ) -> int:
     """
     Send outgoing email.
@@ -47,8 +48,14 @@ def send_mail_plus(
         password=auth_password,
         fail_silently=fail_silently,
     )
+    headers = headers or {}
     mail = EmailMultiAlternatives(
-        subject, message, from_email, recipient_list, connection=connection
+        subject,
+        message,
+        from_email,
+        recipient_list,
+        connection=connection,
+        headers=headers,
     )
     if html_message:
         html_message, mime_images = replace_datauri_images(html_message)

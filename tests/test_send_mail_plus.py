@@ -22,6 +22,7 @@ def test_send_mail_plus(mailoutbox):
         ["foo@bar.baz"],
         html_message=html_message,
         attachments=attachments,
+        headers={"X-Custom-Header": "foo"},
     )
 
     assert len(mailoutbox) == 1
@@ -30,6 +31,7 @@ def test_send_mail_plus(mailoutbox):
     assert message.subject == "My Subject"
     assert message.recipients() == ["foo@bar.baz"]
     assert message.from_email == "foo@sender.com"
+    assert message.extra_headers["X-Custom-Header"] == "foo"
 
     # text
     assert message.body == "My Message\n"
