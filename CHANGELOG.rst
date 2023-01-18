@@ -2,6 +2,13 @@
 Changelog
 =========
 
+1.1.0 (2023-01-18)
+==================
+
+Adds optional ``headers`` parameter to ``send_mail_plus``. These headers will
+end up in the header section of the body of the top message, not in any
+multipart "children" of the message.
+
 1.0.0 (2022-11-08)
 ==================
 
