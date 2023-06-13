@@ -25,6 +25,7 @@ def send_mail_plus(
     message: str,
     from_email: Optional[str],
     recipient_list: Optional[Sequence[str]],
+    cc: Optional[Sequence[str]],
     fail_silently: bool = False,
     auth_user: Optional[str] = None,
     auth_password: Optional[str] = None,
@@ -54,6 +55,7 @@ def send_mail_plus(
         message,
         from_email,
         recipient_list,
+        cc=cc,
         connection=connection,
         headers=headers,
     )
