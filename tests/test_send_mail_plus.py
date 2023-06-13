@@ -14,12 +14,14 @@ def test_send_mail_plus(mailoutbox):
     text_message = "My Message\n"
     html_message = f'<p>My Message <img src="{datauri}" alt="my-image"></p>'
     attachments = [("file.bin", b"content", "application/foo")]
+    cc_addresses = ["cc1@test.te", "cc2@test.te"]
 
     send_mail_plus(
         "My Subject",
         text_message,
         "foo@sender.com",
         ["foo@bar.baz"],
+        cc=cc_addresses,
         html_message=html_message,
         attachments=attachments,
         headers={"X-Custom-Header": "foo"},
@@ -29,9 +31,10 @@ def test_send_mail_plus(mailoutbox):
 
     message = mailoutbox[0]
     assert message.subject == "My Subject"
-    assert message.recipients() == ["foo@bar.baz"]
+    assert message.recipients() == ["foo@bar.baz", "cc1@test.te", "cc2@test.te"]
     assert message.from_email == "foo@sender.com"
     assert message.extra_headers["X-Custom-Header"] == "foo"
+    assert message.cc == ["cc1@test.te", "cc2@test.te"]
 
     # text
     assert message.body == "My Message\n"
