@@ -1,7 +1,7 @@
 mail-cleaner
 ============
 
-:Version: 1.2.0
+:Version: 2.0.0
 :Source: https://github.com/maykinmedia/mail-cleaner
 :Keywords: django, email, sanitize
 :PythonVersion: 3.9

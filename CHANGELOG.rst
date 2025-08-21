@@ -2,6 +2,16 @@
 Changelog
 =========
 
+2.0.0 (2025-08-21)
+==================
+
+* Dropped support for Python < 3.10.
+* Dropped support for Django < 4.2.
+* Confirmed support for Python 3.12 and 3.13.
+* Confirmed support for Django 5.2.
+* Fixed crash in ``strip_tags_plus`` when anchors contain other elements than ``span``,
+  like ``strong``.
+
 1.2.0 (2023-06-13)
 ==================
 
