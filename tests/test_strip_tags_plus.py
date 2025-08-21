@@ -56,7 +56,8 @@ def test_unwrapping_anchors():
 
     <p>
     There are <a href="https://example.com"><span>also</span></a> some
-    <a href="https://example.com">links</a> in here.
+    <a href="https://example.com">links</a> in here. Or <a href="https://example.com">
+    <strong>bold</strong><a> text.
     </p>
     """
 
@@ -69,7 +70,8 @@ with
 some newlines.
 
 There are also (https://example.com) some
-links (https://example.com) in here.
+links (https://example.com) in here. Or
+bold (https://example.com) text.
 
 """
     assert output == expected
