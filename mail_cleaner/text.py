@@ -4,6 +4,7 @@ Utilities to convert HTML email into plain-text bodies.
 Taken from Open Forms (EUPL 1.2 licensed), which used the code from other
 Maykin Media projects.
 """
+
 import re
 from html import unescape
 from typing import List
@@ -119,12 +120,11 @@ def unwrap_anchors(html_str: str) -> str:
         if not url:
             continue
 
-        span_child = link.find(".//span")
-        if not link.text and span_child is not None:
-            # Issue open-formulieren/open-forms#2154
-            # Case in which the link has a special colour, so it's wrapped in a span.
-            span_child.text += f" ({url})"
-        else:
-            link.text += f" ({url})"
+        # Issue open-formulieren/open-forms#2154, Taiga Vught #100 - the link text may
+        # contain span and strong tags (or other markup).
+        link_text = link.text_content() or ""
+        link.text = f"{link_text} ({url})"
+        for child in link:
+            link.remove(child)
 
     return tostring(root, encoding="utf8").decode("utf8")
