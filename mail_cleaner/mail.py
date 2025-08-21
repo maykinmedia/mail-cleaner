@@ -1,6 +1,7 @@
 """
 Utility layer on top of :mod:`django.core.mail`.
 """
+
 import logging
 from email.mime.image import MIMEImage
 from io import StringIO
